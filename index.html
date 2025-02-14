@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>For My Dearest Senda 💖</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    /* --- General Page Styling --- */
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ffe6f2, #ffc1e3); /* Soft pink gradient */
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+    /* --- Background Hearts --- */
+    .heart-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff4081"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+      background-repeat: repeat;
+      opacity: 0.2;
+    }
+    /* --- Custom Button Styles --- */
+    .btn-custom {
+      font-size: 1.5rem;
+      padding: 15px 30px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    .btn-yes {
+      background-color: #e91e63;
+      color: white;
+    }
+    .btn-yes:hover {
+      transform: scale(1.1);
+    }
+    .btn-no {
+      background-color: #b71c1c;
+      color: white;
+    }
+    /* --- Animation Container --- */
+    #animation-container {
+      display: none;
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ffe6f2, #ffc1e3); /* Soft pink gradient */
+    }
+    /* --- Flower Bloom Effect --- */
+    .flower-wrapper {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%) scaleY(0);
+      transform-origin: bottom center;
+      animation: bloom 3s forwards ease-in-out;
+    }
+    @keyframes bloom {
+      0% {
+        transform: translateX(-50%) scaleY(0);
+      }
+      100% {
+        transform: translateX(-50%) scaleY(1);
+      }
+    }
+    /* --- Valentine's Message --- */
+    .valentine-message {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+      color: #880e4f;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 2s forwards ease-in;
+      opacity: 0;
+      text-align: center;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+    /* --- Restart Button --- */
+    #restart-btn {
+      display: none;
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #c2185b;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      transition: background 0.3s ease;
+    }
+    #restart-btn:hover {
+      background: #ad1457;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Hearts -->
+  <div class="heart-bg"></div>
+
+  <!-- Choice Screen -->
+  <div id="choice-screen" class="d-flex justify-content-center align-items-center vh-100">
+    <div class="text-center">
+      <h1 class="display-4 text-danger">Will you be my Valentine, Senda? 💖</h1>
+      <button id="yes-btn" class="btn btn-custom btn-yes mt-3">Yes! ❤️</button>
+      <button id="no-btn" class="btn btn-custom btn-no mt-3">No 😢</button>
+    </div>
+  </div>
+
+  <!-- Animation Screen -->
+  <div id="animation-container">
+    <div class="valentine-message">
+      To my dearest Senda, you are my heart, my soul, and my everything. ❤️<br>
+      Roses are red, violets are blue, no one compares to someone as amazing as you. 🌹💞<br>
+      Will you be my Valentine today and always?
+    </div>
+    <div class="flower-wrapper">
+      <svg width="200" height="250" viewBox="0 0 200 250">
+        <path d="M100,230 C75,170 75,110 100,80 C125,110 125,170 100,230 Z" 
+              fill="#ff4081" stroke="#e91e63" stroke-width="2"/>
+        <circle cx="100" cy="230" r="20" fill="#ff4081" stroke="#e91e63" stroke-width="2"/>
+      </svg>
+    </div>
+    <button id="restart-btn" class="btn btn-custom btn-yes">Replay 💫</button>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bg-music" loop>
+    <source src="your-music.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    const choiceScreen = document.getElementById('choice-screen');
+    const animationContainer = document.getElementById('animation-container');
+    const yesBtn = document.getElementById('yes-btn');
+    const noBtn = document.getElementById('no-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const bgMusic = document.getElementById('bg-music');
+
+    // Event for "Yes" button
+    yesBtn.addEventListener('click', () => {
+      choiceScreen.style.display = 'none'; // Hide the choice screen
+      animationContainer.style.display = 'block'; // Show the animation screen
+      startHearts(); // Start floating hearts
+      bgMusic.play(); // Play background music
+
+      // Scroll to the message automatically
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      }, 100);
+    });
+
+    // Event for "No" button
+    const noMessages = [
+      "Are you sure about that? 😢",
+      "Think again! ❤️",
+      "You know you want to say yes! 😉",
+      "Give it another thought! 💕",
+      "Don’t break my heart! 💔"
+    ];
+    let currentIndex = 0;
+
+    noBtn.addEventListener('click', () => {
+      // Change the message in the button
+      noBtn.textContent = noMessages[currentIndex];
+      currentIndex = (currentIndex + 1) % noMessages.length;
+
+      // Move the "No" button to a random position
+      const containerWidth = window.innerWidth - 150; // Subtract button width
+      const containerHeight = window.innerHeight - 50; // Subtract button height
+      const randomX = Math.random() * containerWidth;
+      const randomY = Math.random() * containerHeight;
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = `${randomX}px`;
+      noBtn.style.top = `${randomY}px`;
+    });
+
+    // Event for "Replay" button
+    restartBtn.addEventListener('click', () => {
+      location.reload();
+    });
+
+    // Function to create floating hearts
+    function startHearts() {
+      setInterval(() => { createHeart(); }, 1000);
+      setTimeout(() => { restartBtn.style.display = 'block'; }, 5000);
+    }
+
+    // Function to dynamically create hearts
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.textContent = '💖';
+      heart.style.left = (Math.random() * 80 + 10) + '%';
+      heart.style.bottom = '200px';
+      heart.style.animationDelay = (Math.random() * 2) + 's';
+      animationContainer.appendChild(heart);
+      setTimeout(() => { heart.remove(); }, 3000);
+    }
+  </script>
+</body>
+</html>
